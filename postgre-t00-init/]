@@ -1,0 +1,50 @@
+{-# LANGUAGE OverloadedStrings #-}
+
+module Lib
+    where
+
+import           Database.PostgreSQL.Simple
+import           Database.PostgreSQL.Simple.FromRow
+
+data Client = Client { id   :: Int
+                     , name :: String
+                     } deriving (Show)
+
+instance FromRow Client where
+    fromRow = Client <$> field <*> field
+
+
+localPG :: ConnectInfo
+localPG = defaultConnectInfo { connectHost = "127.0.0.1"
+                             , connectDatabase = "postgres"
+                             , connectUser = "postgres"
+                             , connectPassword = "postgres"
+                             }
+
+someFunc :: IO ()
+someFunc = do
+    conn <- connect localPG
+    -- mapM_ print =<< (query_ conn "SELECT 1 + 1" :: IO [Only Int])
+    putStrLn "Name of your client? "
+    clientName <- getLine
+    cid <- createClient conn clientName
+    putStrLn $ "New Client: " ++ (show cid)
+
+
+createClient :: Connection -> String -> IO [Only Int64]
+createClient conn name = query conn "INSERT INTO client (name) VALUES (?) RETURNING id" $ (ONLY name)
+
+retrieveClient :: Connection -> Int -> IO  [Only String]
+retrieveClient conn cid = query conn "SELECT id, name FROM client WHERE id = ?" $ (ONLY cid)
+
+updateClient :: Connection -> Int -> String -> IO Bool
+updateClient conn ci name = do
+    n <- execute conn "UPDATE client SET name = ? WHERE id = ?" (name, cid)
+    return $ n > 0
+
+deleteClient :: Connection -> Int -> IO Bool
+deleteClient conn cid = do
+    n <- execute conn "DELETE FROM client WHERE id = ?" $ (Only cid)
+    return $ n > 0
+
+
