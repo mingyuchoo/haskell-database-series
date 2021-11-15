@@ -6,7 +6,15 @@
 
 ## Prerequisite
 
-### In Manjaro linux
+### In Ubuntu
+
+```bash
+
+sudo apt install -y libpq-dev	
+
+```
+
+### In Manjaro
 
 ```bash
 
