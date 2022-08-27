@@ -6,7 +6,9 @@ cabal-version: 1.12
 
 name:           postgre-t00-init
 version:        0.1.0.0
+synopsis:       Short description of your package
 description:    Please see the README on GitHub at <https://github.com/githubuser/postgre-t00-init#readme>
+category:       Web
 homepage:       https://github.com/githubuser/postgre-t00-init#readme
 bug-reports:    https://github.com/githubuser/postgre-t00-init/issues
 author:         Author name here
@@ -30,8 +32,10 @@ library
       Paths_postgre_t00_init
   hs-source-dirs:
       src
+  default-extensions:
+      OverloadedStrings
   build-depends:
-      base >=4.7 && <5
+      base >=4.9.1.0 && <5
     , postgresql-simple
   default-language: Haskell2010
 
@@ -41,9 +45,11 @@ executable postgre-t00-init-exe
       Paths_postgre_t00_init
   hs-source-dirs:
       app
-  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  default-extensions:
+      OverloadedStrings
+  ghc-options: -dynamic -threaded -rtsopts -with-rtsopts=-N
   build-depends:
-      base >=4.7 && <5
+      base >=4.9.1.0 && <5
     , postgre-t00-init
     , postgresql-simple
   default-language: Haskell2010
@@ -55,9 +61,11 @@ test-suite postgre-t00-init-test
       Paths_postgre_t00_init
   hs-source-dirs:
       test
-  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  default-extensions:
+      OverloadedStrings
+  ghc-options: -dynamic -threaded -rtsopts -with-rtsopts=-N
   build-depends:
-      base >=4.7 && <5
+      base >=4.9.1.0 && <5
     , postgre-t00-init
     , postgresql-simple
   default-language: Haskell2010

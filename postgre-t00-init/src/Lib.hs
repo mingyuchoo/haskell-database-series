@@ -1,5 +1,3 @@
-{-# LANGUAGE OverloadedStrings #-}
-
 module Lib
     where
 
@@ -29,6 +27,7 @@ localPG = defaultConnectInfo { connectHost = "127.0.0.1"
 someFunc :: IO ()
 someFunc = do
     conn <- connect localPG
+
     cid <- createTest conn
     putStrLn $ "New Test: " ++ (show cid)
 
@@ -41,9 +40,8 @@ someFunc = do
     ret <- deleteTest conn
     putStrLn $ "Ret value: " ++ (show ret)
 
-
 createTest :: Connection -> IO [Only Int]
-createTest conn = query conn "INSERT INTO test (name) VALUES (?) RETURNING id" $ (Only ("Jacob" :: String))
+createTest conn = query conn "INSERT INTO test (id, name) VALUES (?, ?) RETURNING id" $ ((1 :: Int), ("Jacob" :: String))
 
 updateTest :: Connection -> IO Bool
 updateTest conn = do

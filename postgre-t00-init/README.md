@@ -9,25 +9,18 @@
 ### In Ubuntu
 
 ```bash
-
-sudo apt install -y libpq-dev	
-
+sudo apt install -y libpq-dev
 ```
 
 ### In Manjaro
 
 ```bash
-
 sudo pacman -S postgresql-libs
-
 ```
 
 ### Add a package dependency
 
 ```yaml
-
 dependencies:
 - postgresql-simple
-
 ```
-
