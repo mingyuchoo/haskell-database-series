@@ -1,0 +1,204 @@
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.34.4.
+--
+-- see: https://github.com/sol/hpack
+
+name:           persist-postgresql-init
+version:        0.1.0.0
+synopsis:       Short description of your package
+description:    Please see the README on GitHub at <https://github.com/mingyuchoo/persist-postgresql-init#readme>
+category:       Web
+homepage:       https://github.com/mingyuchoo/persist-postgresql-init#readme
+bug-reports:    https://github.com/mingyuchoo/persist-postgresql-init/issues
+author:         Mingyu Choo
+maintainer:     mingyuchoo@gmail.com
+copyright:      Mingyu Choo
+license:        BSD3
+license-file:   LICENSE
+build-type:     Simple
+extra-source-files:
+    README.md
+    CHANGELOG.md
+
+source-repository head
+  type: git
+  location: https://github.com/mingyuchoo/persist-postgresql-init
+
+library
+  exposed-modules:
+      BasicSchema
+      BasicServer
+      Cache
+      CacheServer
+      Database
+      DatabaseEsq
+      SampleObjects
+      SchemaEsq
+      ServerEsq
+  hs-source-dirs:
+      src
+  default-extensions:
+      DataKinds
+      DerivingStrategies
+      FlexibleInstances
+      GADTs
+      GeneralizedNewtypeDeriving
+      MultiParamTypeClasses
+      OverloadedStrings
+      QuasiQuotes
+      RecordWildCards
+      StandaloneDeriving
+      TemplateHaskell
+      TypeFamilies
+      TypeOperators
+      UndecidableInstances
+  ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints
+  build-depends:
+      aeson
+    , base >=4.7 && <5
+    , bytestring
+    , esqueleto
+    , hedis
+    , monad-logger
+    , mtl
+    , persistent
+    , persistent-postgresql
+    , persistent-template
+    , servant
+    , servant-client
+    , servant-server
+    , text
+    , time
+    , transformers
+    , warp
+  default-language: Haskell2010
+
+executable migrate-db
+  hs-source-dirs:
+      app
+  main-is: MigrateDB.hs
+  default-extensions:
+      DataKinds
+      DerivingStrategies
+      FlexibleInstances
+      GADTs
+      GeneralizedNewtypeDeriving
+      MultiParamTypeClasses
+      OverloadedStrings
+      QuasiQuotes
+      RecordWildCards
+      StandaloneDeriving
+      TemplateHaskell
+      TypeFamilies
+      TypeOperators
+      UndecidableInstances
+  ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -dynamic -threaded -rtsopts -with-rtsopts=-N4
+  build-depends:
+      aeson
+    , base >=4.7 && <5
+    , bytestring
+    , esqueleto
+    , hedis
+    , monad-logger
+    , mtl
+    , persist-postgresql-init
+    , persistent
+    , persistent-postgresql
+    , persistent-template
+    , servant
+    , servant-client
+    , servant-server
+    , text
+    , time
+    , transformers
+    , warp
+  default-language: Haskell2010
+
+executable run-server
+  hs-source-dirs:
+      app
+  main-is: RunServer.hs
+  default-extensions:
+      DataKinds
+      DerivingStrategies
+      FlexibleInstances
+      GADTs
+      GeneralizedNewtypeDeriving
+      MultiParamTypeClasses
+      OverloadedStrings
+      QuasiQuotes
+      RecordWildCards
+      StandaloneDeriving
+      TemplateHaskell
+      TypeFamilies
+      TypeOperators
+      UndecidableInstances
+  ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -dynamic -threaded -rtsopts -with-rtsopts=-N4
+  build-depends:
+      aeson
+    , base >=4.7 && <5
+    , bytestring
+    , esqueleto
+    , hedis
+    , monad-logger
+    , mtl
+    , persist-postgresql-init
+    , persistent
+    , persistent-postgresql
+    , persistent-template
+    , servant
+    , servant-client
+    , servant-server
+    , text
+    , time
+    , transformers
+    , warp
+  default-language: Haskell2010
+
+test-suite api-tests
+  type: exitcode-stdio-1.0
+  hs-source-dirs:
+      test
+  main-is: APITests.hs
+  other-modules:
+      TestUtils
+  default-extensions:
+      DataKinds
+      DerivingStrategies
+      FlexibleInstances
+      GADTs
+      GeneralizedNewtypeDeriving
+      MultiParamTypeClasses
+      OverloadedStrings
+      QuasiQuotes
+      RecordWildCards
+      StandaloneDeriving
+      TemplateHaskell
+      TypeFamilies
+      TypeOperators
+      UndecidableInstances
+  ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -dynamic -threaded -rtsopts -with-rtsopts=-N4
+  build-depends:
+      aeson
+    , base >=4.7 && <5
+    , bytestring
+    , esqueleto
+    , hedis
+    , hspec
+    , http-client
+    , http-client-tls
+    , monad-logger
+    , mtl
+    , persist-postgresql-init
+    , persistent
+    , persistent-postgresql
+    , persistent-template
+    , servant
+    , servant-client
+    , servant-server
+    , text
+    , time
+    , transformers
+    , warp
+  default-language: Haskell2010
