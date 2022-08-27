@@ -1,4 +1,4 @@
-# postgre-t00-init
+# postgresql-simple-init
 
 ## Prerequisite
 
