@@ -1,10 +1,8 @@
-# sqlite-t00-init
+# sqlite-simple-init
 
 ## How to run application
 
-```bash
-
+```sh
 rm test.db
 stack run
-
 ```
