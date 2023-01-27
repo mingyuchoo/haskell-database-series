@@ -13,7 +13,7 @@ homepage:       https://github.com/mingyuchoo/postgresql-simple-init#readme
 bug-reports:    https://github.com/mingyuchoo/postgresql-simple-init/issues
 author:         Mingyu Choo
 maintainer:     mingyuchoo@gmail.com
-copyright:      2022 Mingyu Choo
+copyright:      Mingyu Choo
 license:        BSD3
 license-file:   LICENSE
 build-type:     Simple
