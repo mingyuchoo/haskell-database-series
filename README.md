@@ -1,7 +1,7 @@
 # haskell-database-series
 
-## How to build fater 
+## How to build fater
 
-```sh
+```bash
 stack build --fast --file-watch --ghc-options "-j4 +RTS -A128m -n2m -RTS"
 ```

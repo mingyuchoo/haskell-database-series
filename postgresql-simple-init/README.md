@@ -13,13 +13,13 @@ DROP TABLE test;
 
 ### In Ubuntu
 
-```sh
+```bash
 sudo apt install -y libpq-dev
 ```
 
 ### In Manjaro
 
-```sh
+```bash
 sudo pacman -S postgresql-libs
 ```
 

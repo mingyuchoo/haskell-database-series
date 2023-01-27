@@ -8,14 +8,14 @@
 
 - <https://postgrest.org/en/stable/>
 
-```sh
+```bash
 # download from https://github.com/PostgREST/postgrest/releases/latest
 tar xJf postgrest-<version>-<platform>.tar.xz
 ```
 
 or
 
-```sh
+```bash
 git clone https://github.com/PostgREST/postgrest
 cd postgrest
 stack build
@@ -24,7 +24,7 @@ stack install
 
 ## How to connect PostgreSQL in Ubuntu
 
-```sh
+```bash
 $ sudo apt install postgresql-client-14
 $ psql -h localhost -p 5432 -d postgres -U postgres
 ```
@@ -32,7 +32,7 @@ $ psql -h localhost -p 5432 -d postgres -U postgres
 
 ## How to create database for API
 
-```sh
+```bash
 create schema api;
 create table api.todos (
   id serial primary key,
@@ -53,7 +53,7 @@ grant web_anon to authenticator;
 
 ## How to run PostgREST
 
-```sh
+```bash
 postgrest tutorial.conf
 ```
 

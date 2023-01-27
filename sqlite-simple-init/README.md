@@ -2,7 +2,7 @@
 
 ## How to run application
 
-```sh
+```bash
 rm test.db
 stack run
 ```

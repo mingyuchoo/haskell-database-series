@@ -6,14 +6,14 @@
 
 Building this code requires that you have Postgres installed on your system. If you run `stack build` and see the following error message, this indicates that you do not have Postgres:
 
-```sh
+```bash
 >> stack build
 setup: The program 'pg_config' is required but it could not be found
 ```
 
 On Linux, you'll want at least the following packages:
 
-```sh
+```bash
 >> sudo apt install postgresql postgresql-contrib libpq-dev
 ```
 
@@ -29,7 +29,7 @@ The two main functions you should be concerned with are running the server and t
 should be able to run the `redis-server` command and leave it running in the background. Then you can bring up the CLI
 with `redis-cli` and run some basic commands:
 
-```sh
+```bash
 >> redis-cli
 > EXISTS "1"
 1
@@ -59,7 +59,7 @@ localConnString = "host=127.0.0.1 port=5432 user=postgres dbname=postgres passwo
 Then once you load the code in GHCI, you should use the `migrateDB` expression. This will migrate your Postgres database
 so that it contains the `users` table specified in our schema! Note how you can also set your connection string here as well if it's different from our built-in.
 
-```sh
+```bash
 >> stack ghci
 >> :l
 -- (Removes all modules so there are no name conflicts)
@@ -70,7 +70,7 @@ so that it contains the `users` table specified in our schema! Note how you can 
 
 Then you'll be able to start running queries using the other functions in the `Database` module
 
-```sh
+```bash
 >> let u = User "Kristina" "kristina@gmail.com" 45 "Software Engineer"
 >> createUserPG localConnString u
 1
@@ -98,20 +98,20 @@ In this second part, we make a very basic server to expose the information in ou
 
 To run this server, first make your database is migrated, if you didn't do that in part 1:
 
-```sh
+```bash
 >> stack exec migrate-db
 ```
 
 Then you can run the server with this executable:
 
-```sh
+```bash
 >> stack exec run-server
 ```
 
 Now you can make HTTP requests to your server from any client program. My favorite is [Postman](https://postman.com).
 Then you can follow the same pattern you did in the first part. Try creating a user:
 
-```sh
+```bash
 POST /users
 {
   "name": "Kristina",
@@ -127,7 +127,7 @@ POST /users
 
 Then try fetching it:
 
-```sh
+```bash
 GET /users/2
 
 ...
@@ -142,7 +142,7 @@ GET /users/2
 
 You can also try fetching invalid users!
 
-```sh
+```bash
 GET /users/45
 
 ...
@@ -160,7 +160,7 @@ which has updates to the original server from part 2 with our caching functional
 You can run the updated server with the `run-server` executable and the `cache` argument, though you should have the Redis server running
 in the background first:
 
-```sh
+```bash
 >> redis-server &
 >> stack exec run-server -- cache
 ```
@@ -169,7 +169,7 @@ The external API is the same, so you can make the same kinds of HTTP requests. F
 in the Part 2 section, we might do `GET /users/2`. Then you should be able to bring up the `redis-cli` and find that
 the user is stored in our cache:
 
-```sh
+```bash
 >> redis-cli
 > GET "2"
 "User {userName = \"Kristina\", userEmail = \"kristina@gmail.com\", userAge = 45, userOccupation = \"Software Engineer\"}"
@@ -183,7 +183,7 @@ In this part, we write some tests for our Server. You can see some setup code in
 but the main assertions are written in Hspec in [this file](https://github.com/MondayMorningHaskell/RealWorldHaskell/blob/master/test/APITests.hs).
 You can run the tests by running:
 
-```sh
+```bash
 stack test
 ```
 
@@ -195,7 +195,7 @@ the tests insert and then delete a user, the primary key index will increment.
 The second option is to use Docker. To do this, you can start the Docker container specified in the repository by going
 to the root project directory and running the following command:
 
-```sh
+```bash
 >> docker-compose up
 ```
 
@@ -224,7 +224,7 @@ distinct set of modules to avoid conflicts with the code from the first 4 parts:
 
 To try out this code, you should start by running a new migration on your database:
 
-```sh
+```bash
 >> stack exec migrate-db -- esq
 ```
 
@@ -236,7 +236,7 @@ try running the insertions for yourself. In the `SampleObjects` module, we've pr
 as sample database items. The `User` objects are fine on their own, but the `Article` objects require you to pass in
 the integer ID of the User after they've been created. For example:
 
-```sh
+```bash
 >> stack ghci
 >> :l
 >> :load DatabaseEsq SampleObjects
@@ -251,13 +251,13 @@ the integer ID of the User after they've been created. For example:
 
 The other way to do this is to use the API via the server. Start by running the updated server:
 
-```sh
+```bash
 >> stack exec run-server -- esq
 ```
 
 And then you can make your requests, via Postman or whatever service you use:
 
-```sh
+```bash
 POST /users
 {
   "name": "Kristina",
