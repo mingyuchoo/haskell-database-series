@@ -15,7 +15,7 @@ category:            Web
 description:         Please see the README on GitHub at <https://github.com/mingyuchoo/persist-postgresql-init#readme>
 
 dependencies:
-- base >= 4.7 && < 5
+- base >= 4.18 && < 5
 - aeson
 - bytestring
 - esqueleto
