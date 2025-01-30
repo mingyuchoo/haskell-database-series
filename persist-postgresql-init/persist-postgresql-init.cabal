@@ -1,4 +1,4 @@
-cabal-version: 1.12
+cabal-version: 3.0
 
 -- This file has been generated from package.yaml by hpack version 0.34.4.
 --
@@ -14,7 +14,7 @@ bug-reports:    https://github.com/mingyuchoo/persist-postgresql-init/issues
 author:         Mingyu Choo
 maintainer:     mingyuchoo@gmail.com
 copyright:      Mingyu Choo
-license:        BSD3
+license:        BSD-3-Clause
 license-file:   LICENSE
 build-type:     Simple
 extra-source-files:
@@ -56,7 +56,7 @@ library
   ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints
   build-depends:
       aeson
-    , base >=4.7 && <5
+    , base >=4.19 && <5
     , bytestring
     , esqueleto
     , hedis
@@ -96,7 +96,7 @@ executable migrate-db
   ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -dynamic -threaded -rtsopts -with-rtsopts=-N4
   build-depends:
       aeson
-    , base >=4.7 && <5
+    , base >=4.19 && <5
     , bytestring
     , esqueleto
     , hedis
@@ -137,7 +137,7 @@ executable run-server
   ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -dynamic -threaded -rtsopts -with-rtsopts=-N4
   build-depends:
       aeson
-    , base >=4.7 && <5
+    , base >=4.19 && <5
     , bytestring
     , esqueleto
     , hedis
@@ -181,7 +181,7 @@ test-suite api-tests
   ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -dynamic -threaded -rtsopts -with-rtsopts=-N4
   build-depends:
       aeson
-    , base >=4.7 && <5
+    , base >=4.19 && <5
     , bytestring
     , esqueleto
     , hedis

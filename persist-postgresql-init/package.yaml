@@ -1,7 +1,7 @@
 name:                persist-postgresql-init
 version:             0.1.0.0
 github:              "mingyuchoo/persist-postgresql-init"
-license:             BSD3
+license:             BSD-3-Clause
 author:              "Mingyu Choo"
 maintainer:          "mingyuchoo@gmail.com"
 copyright:           "Mingyu Choo"
@@ -15,7 +15,7 @@ category:            Web
 description:         Please see the README on GitHub at <https://github.com/mingyuchoo/persist-postgresql-init#readme>
 
 dependencies:
-- base >= 4.18 && < 5
+- base >= 4.19 && < 5
 - aeson
 - bytestring
 - esqueleto
