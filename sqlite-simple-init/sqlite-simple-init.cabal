@@ -28,6 +28,10 @@ source-repository head
 library
   exposed-modules:
       Lib
+      Domain.Model
+      Application.UserService
+      Infrastructure.Repository.SQLiteUserRepository
+      Infrastructure.Web.Server
   other-modules:
       Paths_sqlite_simple_init
   autogen-modules:

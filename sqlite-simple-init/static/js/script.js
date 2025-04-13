@@ -116,12 +116,15 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             return response.json();
         })
-        .then(() => {
+        .then(data => {
             resetForm();
             loadUsers();
             alert(id ? 'User updated successfully!' : 'User created successfully!');
         })
-        .catch(error => console.error('Error saving user:', error));
+        .catch(error => {
+            console.error('Error saving user:', error);
+            alert('Error: ' + error.message);
+        });
     }
 
     // Function to delete a user
