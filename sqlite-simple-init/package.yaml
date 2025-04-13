@@ -15,11 +15,12 @@ category:            Web
 description:         Please see the README on GitHub at <https://github.com/mingyuchoo/sqlite-simple-init#readme>
 
 dependencies:
-- base >= 4.19 && < 5
+- base
 - sqlite-simple
 - containers
 - flow
 - parallel
+- time
 
 default-extensions:
 - OverloadedStrings
