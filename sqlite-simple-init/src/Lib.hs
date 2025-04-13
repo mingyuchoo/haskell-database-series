@@ -1,15 +1,22 @@
 {-# LANGUAGE DeriveGeneric     #-}
 {-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE DeriveAnyClass    #-}
 
 module Lib
-    where
+    ( startApp
+    , User(..
+    )) where
 
-import           Control.Applicative
+import           Data.Aeson           (FromJSON, ToJSON)
+import           Data.Text.Lazy      (Text)
 import           Data.Time
 import           Database.SQLite.Simple
 import           Database.SQLite.Simple.FromRow
 import           Database.SQLite.Simple.ToRow
 import           GHC.Generics
+import           Network.HTTP.Types
+import           Network.Wai.Middleware.Cors
+import           Web.Scotty
 
 data User = User { userId       :: Maybe Int
                  , userName     :: String
@@ -18,7 +25,7 @@ data User = User { userId       :: Maybe Int
                  , createdAt    :: UTCTime
                  , updatedAt    :: UTCTime
                  }
-     deriving (Generic, Show)
+     deriving (Generic, Show, FromJSON, ToJSON)
 
 instance FromRow User where
     fromRow = User <$> field <*> field <*> field <*> field <*> field <*> field
@@ -86,35 +93,51 @@ deleteUser conn uid = do
     executeNamed conn "DELETE FROM users WHERE id = :uid" [":uid" := uid]
     return True
 
--- Example usage
-someFunc :: IO ()
-someFunc = do
+-- Web server
+startApp :: IO ()
+startApp = do
     conn <- initDB
+    scotty 3000 $ do
+        -- Enable CORS
+        middleware simpleCors
 
-    -- Create some users
-    user1 <- createUser conn "John Doe" "john@example.com" "password123"
-    user2 <- createUser conn "Jane Smith" "jane@example.com" "password456"
+        -- GET /users - List all users
+        get "/users" $ do
+            users <- liftAndCatchIO $ getAllUsers conn
+            json users
 
-    -- Get all users
-    users <- getAllUsers conn
-    putStrLn "All users:"
-    mapM_ print users
+        -- GET /users/:id - Get user by ID
+        get "/users/:id" $ do
+            uid <- param "id"
+            maybeUser <- liftAndCatchIO $ getUserById conn uid
+            case maybeUser of
+                Just user -> json user
+                Nothing -> status status404
 
-    -- Get user by ID
-    case userId user1 of
-        Just uid -> do
-            maybeUser <- getUserById conn uid
-            putStrLn "Found user:"
-            print maybeUser
+        -- POST /users - Create new user
+        post "/users" $ do
+            name <- param "name"
+            email <- param "email"
+            password <- param "password"
+            user <- liftAndCatchIO $ createUser conn name email password
+            status status201
+            json user
 
-            -- Update user
-            success <- updateUser conn uid "John Doe Updated" "john.updated@example.com" "newpassword"
-            putStrLn $ "Update success: " ++ show success
+        -- PUT /users/:id - Update user
+        put "/users/:id" $ do
+            uid <- param "id"
+            name <- param "name"
+            email <- param "email"
+            password <- param "password"
+            success <- liftAndCatchIO $ updateUser conn uid name email password
+            if success
+                then status status200
+                else status status404
 
-            -- Delete user
-            deleted <- deleteUser conn uid
-            putStrLn $ "Delete success: " ++ show deleted
-
-        Nothing -> putStrLn "Failed to get user ID"
-
-    close conn
+        -- DELETE /users/:id - Delete user
+        delete "/users/:id" $ do
+            uid <- param "id"
+            success <- liftAndCatchIO $ deleteUser conn uid
+            if success
+                then status status204
+                else status status404

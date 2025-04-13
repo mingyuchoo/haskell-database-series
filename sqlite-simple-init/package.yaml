@@ -21,6 +21,12 @@ dependencies:
 - flow
 - parallel
 - time
+- scotty
+- aeson
+- wai
+- wai-cors
+- http-types
+- text
 
 default-extensions:
 - OverloadedStrings

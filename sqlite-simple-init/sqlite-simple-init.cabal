@@ -38,12 +38,18 @@ library
       OverloadedStrings
   ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints
   build-depends:
-      base
+      aeson
+    , base
     , containers
     , flow
+    , http-types
     , parallel
+    , scotty
     , sqlite-simple
+    , text
     , time
+    , wai
+    , wai-cors
   default-language: Haskell2010
 
 executable sqlite-simple-init-exe
@@ -58,13 +64,19 @@ executable sqlite-simple-init-exe
       OverloadedStrings
   ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -dynamic -threaded -rtsopts -with-rtsopts=-N4
   build-depends:
-      base
+      aeson
+    , base
     , containers
     , flow
+    , http-types
     , parallel
+    , scotty
     , sqlite-simple
     , sqlite-simple-init
+    , text
     , time
+    , wai
+    , wai-cors
   default-language: Haskell2010
 
 test-suite sqlite-simple-init-test
@@ -80,11 +92,17 @@ test-suite sqlite-simple-init-test
       OverloadedStrings
   ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -dynamic -threaded -rtsopts -with-rtsopts=-N4
   build-depends:
-      base
+      aeson
+    , base
     , containers
     , flow
+    , http-types
     , parallel
+    , scotty
     , sqlite-simple
     , sqlite-simple-init
+    , text
     , time
+    , wai
+    , wai-cors
   default-language: Haskell2010
