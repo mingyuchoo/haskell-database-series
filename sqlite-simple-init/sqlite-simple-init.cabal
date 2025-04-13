@@ -41,6 +41,7 @@ library
       aeson
     , base
     , containers
+    , directory
     , flow
     , http-types
     , parallel
@@ -50,6 +51,7 @@ library
     , time
     , wai
     , wai-cors
+    , wai-extra
   default-language: Haskell2010
 
 executable sqlite-simple-init-exe
@@ -67,6 +69,7 @@ executable sqlite-simple-init-exe
       aeson
     , base
     , containers
+    , directory
     , flow
     , http-types
     , parallel
@@ -77,6 +80,7 @@ executable sqlite-simple-init-exe
     , time
     , wai
     , wai-cors
+    , wai-extra
   default-language: Haskell2010
 
 test-suite sqlite-simple-init-test
@@ -95,6 +99,7 @@ test-suite sqlite-simple-init-test
       aeson
     , base
     , containers
+    , directory
     , flow
     , http-types
     , parallel
@@ -105,4 +110,5 @@ test-suite sqlite-simple-init-test
     , time
     , wai
     , wai-cors
+    , wai-extra
   default-language: Haskell2010

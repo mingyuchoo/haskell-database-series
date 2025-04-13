@@ -13,9 +13,9 @@ import           Database.SQLite.Simple
 import           GHC.Generics
 import           Network.HTTP.Types
 import           Network.Wai.Middleware.Cors
+import           System.Directory (doesFileExist)
 import           Web.Scotty
 import           Flow ((<|))
-
 
 data User = User { userId       :: Maybe Int
                  , userName     :: String
@@ -99,7 +99,26 @@ startApp = do
     scotty 3000 <| do
         -- Enable CORS
         middleware simpleCors
+        
+        -- Serve static files
+        get "/css/:filename" <| do
+            filename <- param "filename"
+            setHeader "Content-Type" "text/css"
+            file ("static/css/" ++ filename)
+            
+        get "/js/:filename" <| do
+            filename <- param "filename"
+            setHeader "Content-Type" "application/javascript"
+            file ("static/js/" ++ filename)
+            
+        get "/index.html" <| do
+            setHeader "Content-Type" "text/html"
+            file "static/index.html"
 
+        -- Redirect root to index.html
+        get "/" <| do
+            redirect "/index.html"
+            
         -- GET /users - List all users
         get "/users" <| do
             users <- liftAndCatchIO <| getAllUsers conn
