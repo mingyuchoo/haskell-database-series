@@ -1,6 +1,6 @@
 cabal-version: 3.0
 
--- This file has been generated from package.yaml by hpack version 0.36.0.
+-- This file has been generated from package.yaml by hpack version 0.37.0.
 --
 -- see: https://github.com/sol/hpack
 
@@ -12,7 +12,7 @@ category:       Web
 homepage:       https://github.com/mingyuchoo/sqlite-simple-init#readme
 bug-reports:    https://github.com/mingyuchoo/sqlite-simple-init/issues
 author:         Mingyu Choo
-maintainer:     mingyuchoo@gmail.com@gmail.com
+maintainer:     mingyuchoo@gmail.com
 copyright:      Mingyu Choo
 license:        BSD-3-Clause
 license-file:   LICENSE
@@ -30,6 +30,8 @@ library
       Lib
   other-modules:
       Paths_sqlite_simple_init
+  autogen-modules:
+      Paths_sqlite_simple_init
   hs-source-dirs:
       src
   default-extensions:
@@ -46,6 +48,8 @@ library
 executable sqlite-simple-init-exe
   main-is: Main.hs
   other-modules:
+      Paths_sqlite_simple_init
+  autogen-modules:
       Paths_sqlite_simple_init
   hs-source-dirs:
       app
@@ -65,6 +69,8 @@ test-suite sqlite-simple-init-test
   type: exitcode-stdio-1.0
   main-is: Spec.hs
   other-modules:
+      Paths_sqlite_simple_init
+  autogen-modules:
       Paths_sqlite_simple_init
   hs-source-dirs:
       test
