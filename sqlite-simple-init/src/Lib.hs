@@ -4,19 +4,18 @@
 
 module Lib
     ( startApp
-    , User(..
-    )) where
+    , User(..)
+    ) where
 
 import           Data.Aeson           (FromJSON, ToJSON)
-import           Data.Text.Lazy      (Text)
 import           Data.Time
 import           Database.SQLite.Simple
-import           Database.SQLite.Simple.FromRow
-import           Database.SQLite.Simple.ToRow
 import           GHC.Generics
 import           Network.HTTP.Types
 import           Network.Wai.Middleware.Cors
 import           Web.Scotty
+import           Flow ((<|))
+
 
 data User = User { userId       :: Maybe Int
                  , userName     :: String
@@ -41,7 +40,7 @@ initDB = do
     execute_ conn createUsersTable
     return conn
     where
-        createUsersTable = Query $
+        createUsersTable = Query <|
             "CREATE TABLE IF NOT EXISTS users (\
             \id INTEGER PRIMARY KEY AUTOINCREMENT,\
             \name TEXT NOT NULL,\
@@ -58,7 +57,7 @@ createUser conn name email password = do
     execute conn "INSERT INTO users (name, email, password, created_at, updated_at) VALUES (?, ?, ?, ?, ?)"
            (userName user, userEmail user, userPassword user, createdAt user, updatedAt user)
     rowId <- lastInsertRowId conn
-    return $ user { userId = Just (fromIntegral rowId) }
+    return <| user { userId = Just (fromIntegral rowId) }
 
 -- Get all users
 getAllUsers :: Connection -> IO [User]
@@ -69,7 +68,7 @@ getAllUsers conn =
 getUserById :: Connection -> Int -> IO (Maybe User)
 getUserById conn uid = do
     users <- query conn "SELECT id, name, email, password, created_at, updated_at FROM users WHERE id = ?" (Only uid)
-    return $ case users of
+    return <| case users of
         [user] -> Just user
         _      -> Nothing
 
@@ -97,47 +96,47 @@ deleteUser conn uid = do
 startApp :: IO ()
 startApp = do
     conn <- initDB
-    scotty 3000 $ do
+    scotty 3000 <| do
         -- Enable CORS
         middleware simpleCors
 
         -- GET /users - List all users
-        get "/users" $ do
-            users <- liftAndCatchIO $ getAllUsers conn
+        get "/users" <| do
+            users <- liftAndCatchIO <| getAllUsers conn
             json users
 
         -- GET /users/:id - Get user by ID
-        get "/users/:id" $ do
+        get "/users/:id" <| do
             uid <- param "id"
-            maybeUser <- liftAndCatchIO $ getUserById conn uid
+            maybeUser <- liftAndCatchIO <| getUserById conn uid
             case maybeUser of
                 Just user -> json user
                 Nothing -> status status404
 
         -- POST /users - Create new user
-        post "/users" $ do
+        post "/users" <| do
             name <- param "name"
             email <- param "email"
             password <- param "password"
-            user <- liftAndCatchIO $ createUser conn name email password
+            user <- liftAndCatchIO <| createUser conn name email password
             status status201
             json user
 
         -- PUT /users/:id - Update user
-        put "/users/:id" $ do
+        put "/users/:id" <| do
             uid <- param "id"
             name <- param "name"
             email <- param "email"
             password <- param "password"
-            success <- liftAndCatchIO $ updateUser conn uid name email password
+            success <- liftAndCatchIO <| updateUser conn uid name email password
             if success
                 then status status200
                 else status status404
 
         -- DELETE /users/:id - Delete user
-        delete "/users/:id" $ do
+        delete "/users/:id" <| do
             uid <- param "id"
-            success <- liftAndCatchIO $ deleteUser conn uid
+            success <- liftAndCatchIO <| deleteUser conn uid
             if success
                 then status status204
                 else status status404
