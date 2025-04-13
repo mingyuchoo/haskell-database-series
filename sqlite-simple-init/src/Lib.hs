@@ -1,23 +1,24 @@
+{-# LANGUAGE DeriveGeneric     #-}
 {-# LANGUAGE OverloadedStrings #-}
-{-# LANGUAGE DeriveGeneric #-}
 
-module Lib where
+module Lib
+    where
 
 import           Control.Applicative
+import           Data.Time
 import           Database.SQLite.Simple
 import           Database.SQLite.Simple.FromRow
 import           Database.SQLite.Simple.ToRow
 import           GHC.Generics
-import           Data.Time
 
-data User = User 
-  { userId        :: Maybe Int
-  , userName      :: String
-  , userEmail     :: String
-  , userPassword  :: String
-  , createdAt     :: UTCTime
-  , updatedAt     :: UTCTime
-  } deriving (Show, Generic)
+data User = User { userId       :: Maybe Int
+                 , userName     :: String
+                 , userEmail    :: String
+                 , userPassword :: String
+                 , createdAt    :: UTCTime
+                 , updatedAt    :: UTCTime
+                 }
+     deriving (Generic, Show)
 
 instance FromRow User where
     fromRow = User <$> field <*> field <*> field <*> field <*> field <*> field
@@ -89,31 +90,31 @@ deleteUser conn uid = do
 someFunc :: IO ()
 someFunc = do
     conn <- initDB
-    
+
     -- Create some users
     user1 <- createUser conn "John Doe" "john@example.com" "password123"
     user2 <- createUser conn "Jane Smith" "jane@example.com" "password456"
-    
+
     -- Get all users
     users <- getAllUsers conn
     putStrLn "All users:"
     mapM_ print users
-    
+
     -- Get user by ID
     case userId user1 of
         Just uid -> do
             maybeUser <- getUserById conn uid
             putStrLn "Found user:"
             print maybeUser
-            
+
             -- Update user
             success <- updateUser conn uid "John Doe Updated" "john.updated@example.com" "newpassword"
             putStrLn $ "Update success: " ++ show success
-            
+
             -- Delete user
             deleted <- deleteUser conn uid
             putStrLn $ "Delete success: " ++ show deleted
-            
+
         Nothing -> putStrLn "Failed to get user ID"
-    
+
     close conn
