@@ -1,45 +1,28 @@
 {-# LANGUAGE OverloadedStrings #-}
 
 module Lib
-    where
+    ( startApp
+    , User(..)
+    ) where
 
-import           Control.Applicative
-import           Database.SQLite.Simple
-import           Database.SQLite.Simple.FromRow
-import           Database.SQLite.Simple.ToRow
+-- Domain Layer
+import           Domain.Model                (User(..))
 
-data TestField = TestField { id   :: Int
-                           , name :: String
-                           } deriving (Show)
+-- Application Layer
+import           Application.UserService     (UserService(..))
 
-instance FromRow TestField where
-    fromRow = TestField <$> field <*> field
+-- Infrastructure Layer
+import           Infrastructure.Repository.SQLiteUserRepository (SQLiteUserRepository(..), initDB)
+import           Infrastructure.Web.Server   (startServer)
 
-instance ToRow TestField where
-    toRow (TestField id name) = toRow (id, name)
-
-someFunc :: IO ()
-someFunc = do
-    conn <- open "test.db"
-
-    execute_ conn "CREATE TABLE IF NOT EXISTS test (id INTEGER PRIMARY KEY, name TEXT)"
-
-    execute conn "INSERT INTO test (name) VALUES (?)"
-        (Only ("Jacob" :: String))
-
-    execute conn "INSERT INTO test (id, name) VALUES (?, ?)"
-        (TestField 100 "Henry")
-
-    rowId <- lastInsertRowId conn
-    executeNamed conn "UPDATE test SET name = :name WHERE id = :id"
-        [ ":name" := ("Thomas (updated)":: String)
-        , ":id"   := rowId
-        ]
-
-    row <- query_ conn "SELECT * FROM test" :: IO [TestField]
-    mapM_ print row
-
-    execute conn "DELETE FROM test WHERE id = ?"
-        (Only rowId)
-
-    close conn
+-- Main application entry point that composes all layers
+startApp :: IO ()
+startApp = do
+    -- Initialize the database connection
+    conn <- initDB
+    
+    -- Create the repository with the connection
+    let repository = SQLiteUserRepository conn
+    
+    -- Start the web server with the repository
+    startServer repository

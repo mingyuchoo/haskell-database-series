@@ -15,11 +15,20 @@ category:            Web
 description:         Please see the README on GitHub at <https://github.com/mingyuchoo/sqlite-simple-init#readme>
 
 dependencies:
-- base >= 4.19 && < 5
+- base
 - sqlite-simple
 - containers
 - flow
 - parallel
+- time
+- scotty
+- aeson
+- wai
+- wai-cors
+- wai-extra
+- http-types
+- text
+- directory
 
 default-extensions:
 - OverloadedStrings
@@ -37,6 +46,12 @@ ghc-options:
 
 library:
   source-dirs: src
+  exposed-modules:
+  - Lib
+  - Domain.Model
+  - Application.UserService
+  - Infrastructure.Repository.SQLiteUserRepository
+  - Infrastructure.Web.Server
 
 executables:
   sqlite-simple-init-exe:
