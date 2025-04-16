@@ -1,6 +1,6 @@
-cabal-version: 3.0
+cabal-version: 2.2
 
--- This file has been generated from package.yaml by hpack version 0.34.4.
+-- This file has been generated from package.yaml by hpack version 0.38.0.
 --
 -- see: https://github.com/sol/hpack
 
@@ -12,7 +12,7 @@ category:       Web
 homepage:       https://github.com/mingyuchoo/persist-postgresql-init#readme
 bug-reports:    https://github.com/mingyuchoo/persist-postgresql-init/issues
 author:         Mingyu Choo
-maintainer:     mingyuchoo@gmail.com@gmail.com
+maintainer:     mingyuchoo@gmail.com
 copyright:      Mingyu Choo
 license:        BSD-3-Clause
 license-file:   LICENSE
@@ -36,6 +36,10 @@ library
       SampleObjects
       SchemaEsq
       ServerEsq
+  other-modules:
+      Paths_persist_postgresql_init
+  autogen-modules:
+      Paths_persist_postgresql_init
   hs-source-dirs:
       src
   default-extensions:
@@ -56,7 +60,7 @@ library
   ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints
   build-depends:
       aeson
-    , base >=4.19 && <5
+    , base
     , bytestring
     , esqueleto
     , hedis
@@ -78,6 +82,12 @@ executable migrate-db
   hs-source-dirs:
       app
   main-is: MigrateDB.hs
+  other-modules:
+      MigrateDBEsq
+      RunServer
+      Paths_persist_postgresql_init
+  autogen-modules:
+      Paths_persist_postgresql_init
   default-extensions:
       DataKinds
       DerivingStrategies
@@ -96,7 +106,7 @@ executable migrate-db
   ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -dynamic -threaded -rtsopts -with-rtsopts=-N4
   build-depends:
       aeson
-    , base >=4.19 && <5
+    , base
     , bytestring
     , esqueleto
     , hedis
@@ -119,6 +129,12 @@ executable run-server
   hs-source-dirs:
       app
   main-is: RunServer.hs
+  other-modules:
+      MigrateDB
+      MigrateDBEsq
+      Paths_persist_postgresql_init
+  autogen-modules:
+      Paths_persist_postgresql_init
   default-extensions:
       DataKinds
       DerivingStrategies
@@ -137,7 +153,7 @@ executable run-server
   ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -dynamic -threaded -rtsopts -with-rtsopts=-N4
   build-depends:
       aeson
-    , base >=4.19 && <5
+    , base
     , bytestring
     , esqueleto
     , hedis
@@ -163,6 +179,9 @@ test-suite api-tests
   main-is: APITests.hs
   other-modules:
       TestUtils
+      Paths_persist_postgresql_init
+  autogen-modules:
+      Paths_persist_postgresql_init
   default-extensions:
       DataKinds
       DerivingStrategies
@@ -181,7 +200,7 @@ test-suite api-tests
   ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -dynamic -threaded -rtsopts -with-rtsopts=-N4
   build-depends:
       aeson
-    , base >=4.19 && <5
+    , base
     , bytestring
     , esqueleto
     , hedis
