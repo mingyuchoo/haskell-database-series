@@ -15,7 +15,7 @@ category:            Web
 description:         Please see the README on GitHub at <https://github.com/mingyuchoo/postgresql-simple-init#readme>
 
 dependencies:
-- base >= 4.19 && < 5
+- base
 - postgresql-simple
 
 default-extensions:
