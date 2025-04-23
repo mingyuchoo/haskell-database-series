@@ -48,9 +48,9 @@ library:
   source-dirs: src
   exposed-modules:
   - Lib
-  - Domain.Model
+  - Domain.UserModel
   - Application.UserService
-  - Infrastructure.Repository.SQLiteUserRepository
+  - Infrastructure.Repository.UserRepository
   - Infrastructure.Web.Server
 
 executables:

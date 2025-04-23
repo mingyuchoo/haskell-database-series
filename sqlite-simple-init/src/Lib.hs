@@ -6,7 +6,7 @@ module Lib
     ) where
 
 -- Domain Layer
-import           Domain.Model                                   (User (..))
+import           Domain.UserModel                                   (User (..))
 
 -- Application Layer
 import           Application.UserService
@@ -14,8 +14,8 @@ import           Application.UserService
     )
 
 -- Infrastructure Layer
-import           Infrastructure.Repository.SQLiteUserRepository
-    ( SQLiteUserRepository (..)
+import           Infrastructure.Repository.UserRepository
+    ( UserRepository (..)
     , initDB
     )
 import           Infrastructure.Web.Server                      (startServer)
@@ -27,7 +27,7 @@ startApp = do
     conn <- initDB
 
     -- Create the repository with the connection
-    let repository = SQLiteUserRepository conn
+    let repository = UserRepository conn
 
     -- Start the web server with the repository
     startServer repository

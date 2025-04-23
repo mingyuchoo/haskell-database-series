@@ -5,7 +5,7 @@ module Infrastructure.Web.Server
     ( startServer
     ) where
 
-import           Domain.Model                (User(..))
+import           Domain.UserModel                (User(..))
 import           Application.UserService     (UserService(..))
 import           Control.Exception           (SomeException, try)
 import           Data.Aeson                  (object, (.=))

@@ -2,7 +2,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE DeriveAnyClass    #-}
 
-module Domain.Model
+module Domain.UserModel
     ( User(..)
     ) where
 

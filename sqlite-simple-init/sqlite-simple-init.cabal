@@ -28,9 +28,9 @@ source-repository head
 library
   exposed-modules:
       Lib
-      Domain.Model
+      Domain.UserModel
       Application.UserService
-      Infrastructure.Repository.SQLiteUserRepository
+      Infrastructure.Repository.UserRepository
       Infrastructure.Web.Server
   other-modules:
       Paths_sqlite_simple_init

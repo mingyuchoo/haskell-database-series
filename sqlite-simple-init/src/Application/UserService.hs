@@ -10,7 +10,7 @@ module Application.UserService
     )
     where
 
-import           Domain.Model                (User(..))
+import           Domain.UserModel                (User(..))
 import           Data.Time                   (getCurrentTime)
 import           Flow                        ((<|))
 

@@ -1,7 +1,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 
-module Infrastructure.Repository.SQLiteUserRepository
-    ( SQLiteUserRepository(..)
+module Infrastructure.Repository.UserRepository
+    ( UserRepository(..)
     , initDB
     , createUser
     , getAllUsers
@@ -10,14 +10,14 @@ module Infrastructure.Repository.SQLiteUserRepository
     , deleteUser
     ) where
 
-import           Domain.Model                (User(..))
+import           Domain.UserModel                (User(..))
 import           Application.UserService     (UserService(..))
 import           Data.Time                   (getCurrentTime)
 import           Database.SQLite.Simple
 import           Flow                        ((<|))
 
 -- SQLite implementation of UserService
-data SQLiteUserRepository = SQLiteUserRepository Connection
+newtype UserRepository = UserRepository Connection
 
 -- Initialize database
 initDB :: IO Connection
@@ -36,9 +36,9 @@ initDB = do
             \updated_at DATETIME NOT NULL)"
 
 -- UserService implementation for SQLite
-instance UserService SQLiteUserRepository where
+instance UserService UserRepository where
     -- Create a new user
-    createUser (SQLiteUserRepository conn) name email password = do
+    createUser (UserRepository conn) name email password = do
         now <- getCurrentTime
         let user = User Nothing name email password now now
         execute conn "INSERT INTO users (name, email, password, created_at, updated_at) VALUES (?, ?, ?, ?, ?)"
@@ -47,18 +47,18 @@ instance UserService SQLiteUserRepository where
         return <| user { userId = Just (fromIntegral rowId) }
 
     -- Get all users
-    getAllUsers (SQLiteUserRepository conn) =
+    getAllUsers (UserRepository conn) =
         query_ conn "SELECT id, name, email, password, created_at, updated_at FROM users"
 
     -- Get user by ID
-    getUserById (SQLiteUserRepository conn) uid = do
+    getUserById (UserRepository conn) uid = do
         users <- query conn "SELECT id, name, email, password, created_at, updated_at FROM users WHERE id = ?" (Only uid)
         return <| case users of
             [user] -> Just user
             _      -> Nothing
 
     -- Update user
-    updateUser (SQLiteUserRepository conn) uid name email password = do
+    updateUser (UserRepository conn) uid name email password = do
         now <- getCurrentTime
         executeNamed conn
             "UPDATE users SET name = :name, email = :email, password = :pwd, updated_at = :updated WHERE id = :uid"
@@ -69,12 +69,12 @@ instance UserService SQLiteUserRepository where
             , ":uid" := uid
             ]
         -- Get the updated user to return it
-        maybeUser <- getUserById (SQLiteUserRepository conn) uid
+        maybeUser <- getUserById (UserRepository conn) uid
         case maybeUser of
             Just user -> return True
             Nothing -> return False
 
     -- Delete user
-    deleteUser (SQLiteUserRepository conn) uid = do
+    deleteUser (UserRepository conn) uid = do
         executeNamed conn "DELETE FROM users WHERE id = :uid" [":uid" := uid]
         return True
