@@ -1,18 +1,9 @@
-{-# LANGUAGE OverloadedStrings #-}
-
 module Application.UserService
     ( UserService(..)
-    , createUser
-    , getAllUsers
-    , getUserById
-    , updateUser
-    , deleteUser
     )
     where
 
 import           Domain.UserModel                (User(..))
-import           Data.Time                   (getCurrentTime)
-import           Flow                        ((<|))
 
 -- Service interface for user operations
 class UserService a where

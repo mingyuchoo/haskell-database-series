@@ -1,12 +1,12 @@
-{-# LANGUAGE OverloadedStrings #-}
-
 module Lib
     ( User (..)
     , startApp
     ) where
 
 -- Domain Layer
-import           Domain.UserModel                                   (User (..))
+import           Domain.UserModel
+    ( User (..)
+    )
 
 -- Application Layer
 import           Application.UserService
@@ -18,7 +18,9 @@ import           Infrastructure.Repository.UserRepository
     ( UserRepository (..)
     , initDB
     )
-import           Infrastructure.Web.Server                      (startServer)
+import           Infrastructure.Web.Server
+    ( startServer
+    )
 
 -- Main application entry point that composes all layers
 startApp :: IO ()
