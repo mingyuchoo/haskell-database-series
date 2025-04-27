@@ -2,16 +2,24 @@ module Main
     where
 
 import           BasicSchema                 (User (..))
+
 import           Cache
+
 import           CacheServer                 (createUserClient, fetchUserClient)
+
 import           Control.Concurrent          (killThread)
+
 import           Data.Either                 (isLeft)
 import           Data.Int                    (Int64)
 import           Data.Maybe                  (isJust)
+
 import           Database
 import           Database.Persist.Postgresql (fromSqlKey)
+
 import           Servant.Client              (ClientEnv, runClientM)
+
 import           Test.Hspec
+
 import           TestUtils                   (setupTests)
 
 main :: IO ()

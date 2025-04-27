@@ -1,13 +1,15 @@
-{-# LANGUAGE DeriveGeneric     #-}
-{-# LANGUAGE DeriveAnyClass    #-}
+{-# LANGUAGE DeriveAnyClass #-}
+{-# LANGUAGE DeriveGeneric  #-}
 
 module Domain.UserModel
-    ( User(..)
+    ( User (..)
     ) where
 
-import           Data.Aeson           (FromJSON, ToJSON)
+import           Data.Aeson             (FromJSON, ToJSON)
 import           Data.Time
+
 import           Database.SQLite.Simple
+
 import           GHC.Generics
 
 -- Core domain entity
@@ -18,7 +20,7 @@ data User = User { userId       :: Maybe Int
                  , createdAt    :: UTCTime
                  , updatedAt    :: UTCTime
                  }
-     deriving (Generic, Show, FromJSON, ToJSON)
+     deriving (FromJSON, Generic, Show, ToJSON)
 
 -- Database row mapping
 instance FromRow User where

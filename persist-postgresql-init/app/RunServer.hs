@@ -1,11 +1,13 @@
 module Main
     where
 
-import           System.Environment (getArgs)
-
 import qualified BasicServer        as B
+
 import qualified CacheServer        as C
+
 import qualified ServerEsq          as E
+
+import           System.Environment (getArgs)
 
 main :: IO ()
 main = do

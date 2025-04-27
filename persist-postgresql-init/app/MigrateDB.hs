@@ -1,10 +1,11 @@
 module Main
     where
 
-import           System.Environment (getArgs)
-
 import           Database           (localConnString, migrateDB)
+
 import qualified DatabaseEsq        as E
+
+import           System.Environment (getArgs)
 
 main :: IO ()
 main = do

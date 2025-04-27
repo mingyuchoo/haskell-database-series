@@ -8,7 +8,8 @@ import           Database.PostgreSQL.Simple.ToRow
 
 data TestField = TestField { id   :: Int
                            , name :: String
-                           } deriving (Show)
+                           }
+     deriving (Show)
 
 instance FromRow TestField where
     fromRow = TestField <$> field <*> field

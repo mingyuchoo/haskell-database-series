@@ -1,40 +1,46 @@
-{-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE OverloadedStrings   #-}
 {-# LANGUAGE ScopedTypeVariables #-}
 
 module Infrastructure.Web.Server
     ( startServer
     ) where
 
-import           Domain.UserModel                (User(..))
-import           Application.UserService     (UserService(..))
+import           Application.UserService     (UserService (..))
+
 import           Control.Exception           (SomeException, try)
+
 import           Data.Aeson                  (object, (.=))
+
+import           Domain.UserModel            (User (..))
+
+import           Flow                        ((<|))
+
 import           Network.HTTP.Types
 import           Network.Wai.Middleware.Cors
+
 import           Web.Scotty
-import           Flow                        ((<|))
 
 -- Web server implementation
 startServer :: UserService a => a -> IO ()
 startServer userService = scotty 3000 <| do
     -- Enable CORS
     middleware simpleCors
-    
+
     -- Serve static files
     get "/favicon.ico" <| do
         setHeader "Content-Type" "image/x-icon"
         file "static/favicon.ico"
-        
+
     get "/css/:filename" <| do
         filename <- param "filename"
         setHeader "Content-Type" "text/css"
         file ("static/css/" <> filename)
-        
+
     get "/js/:filename" <| do
         filename <- param "filename"
         setHeader "Content-Type" "application/javascript"
         file ("static/js/" <> filename)
-        
+
     get "/index.html" <| do
         setHeader "Content-Type" "text/html"
         file "static/index.html"
@@ -54,7 +60,7 @@ startServer userService = scotty 3000 <| do
         maybeUser <- liftAndCatchIO <| getUserById userService uid
         case maybeUser of
             Just user -> json user
-            Nothing -> status status404
+            Nothing   -> status status404
 
     -- POST /users - Create new user
     post "/users" <| do
@@ -78,13 +84,13 @@ startServer userService = scotty 3000 <| do
         password <- param "password"
         result <- liftAndCatchIO <| try <| updateUser userService uid name email password
         case result of
-            Right success -> 
+            Right success ->
                 if success
                     then do
                         -- Get the updated user to return it
                         userResult <- liftAndCatchIO <| try <| getUserById userService uid
                         case userResult of
-                            Right maybeUser -> 
+                            Right maybeUser ->
                                 case maybeUser of
                                     Just user -> do
                                         status status200
@@ -107,7 +113,7 @@ startServer userService = scotty 3000 <| do
         uid <- param "id"
         result <- liftAndCatchIO <| try <| deleteUser userService uid
         case result of
-            Right success -> 
+            Right success ->
                 if success
                     then status status204
                     else do

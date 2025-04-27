@@ -1,9 +1,8 @@
 module Application.UserService
-    ( UserService(..)
-    )
-    where
+    ( UserService (..)
+    ) where
 
-import           Domain.UserModel                (User(..))
+import           Domain.UserModel (User (..))
 
 -- Service interface for user operations
 class UserService a where

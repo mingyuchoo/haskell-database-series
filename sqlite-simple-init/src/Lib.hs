@@ -4,23 +4,13 @@ module Lib
     ) where
 
 -- Domain Layer
-import           Domain.UserModel
-    ( User (..)
-    )
+import           Application.UserService                  (UserService (..))
 
--- Application Layer
-import           Application.UserService
-    ( UserService (..)
-    )
+import           Domain.UserModel                         (User (..))
 
--- Infrastructure Layer
-import           Infrastructure.Repository.UserRepository
-    ( UserRepository (..)
-    , initDB
-    )
-import           Infrastructure.Web.Server
-    ( startServer
-    )
+import           Infrastructure.Repository.UserRepository (UserRepository (..),
+                                                           initDB)
+import           Infrastructure.Web.Server                (startServer)
 
 -- Main application entry point that composes all layers
 startApp :: IO ()

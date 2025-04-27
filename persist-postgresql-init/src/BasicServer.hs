@@ -5,23 +5,24 @@
 module BasicServer
     where
 
+import           BasicSchema
+
 import           Control.Monad.IO.Class      (liftIO)
 import           Control.Monad.Trans.Except  (throwE)
+
 import           Data.Int                    (Int64)
 import           Data.Proxy                  (Proxy (..))
+
+import           Database                    (createUserPG, fetchUserPG,
+                                              localConnString)
 import           Database.Persist            (Entity, Key)
 import           Database.Persist.Postgresql (ConnectionString)
+
 import           Network.Wai.Handler.Warp    (run)
+
 import           Servant.API
 import           Servant.Client
 import           Servant.Server
-
-import           BasicSchema
-import           Database
-    ( createUserPG
-    , fetchUserPG
-    , localConnString
-    )
 
 type UsersAPI =
        "users" :> Capture "userid" Int64 :> Get '[JSON] User

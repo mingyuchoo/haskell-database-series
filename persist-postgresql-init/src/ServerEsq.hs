@@ -7,16 +7,21 @@ module ServerEsq
 
 import           Control.Monad.IO.Class     (liftIO)
 import           Control.Monad.Trans.Except (throwE)
+
 import           Data.Int                   (Int64)
 import           Data.Proxy                 (Proxy (..))
+
 import           Database.Persist           (Entity, Key)
+
+import           DatabaseEsq
+
 import           Network.Wai.Handler.Warp   (run)
+
+import           SchemaEsq
+
 import           Servant.API
 import           Servant.Client
 import           Servant.Server
-
-import           DatabaseEsq
-import           SchemaEsq
 
 type FullAPI =
        "users" :> Capture "userid" Int64 :> Get '[JSON] User

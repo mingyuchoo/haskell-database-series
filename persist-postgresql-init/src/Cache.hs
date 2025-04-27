@@ -2,9 +2,12 @@ module Cache
     where
 
 import           BasicSchema
+
 import           Control.Monad         (void)
+
 import           Data.ByteString.Char8 (pack, unpack)
 import           Data.Int              (Int64)
+
 import           Database.Redis
 
 type RedisInfo = ConnectInfo

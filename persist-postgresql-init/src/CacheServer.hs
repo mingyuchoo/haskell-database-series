@@ -5,19 +5,24 @@
 module CacheServer
     where
 
+import           BasicSchema
+
+import           Cache
+
 import           Control.Monad.IO.Class     (liftIO)
 import           Control.Monad.Trans.Except (throwE)
+
 import           Data.Int                   (Int64)
 import           Data.Proxy                 (Proxy (..))
+
+import           Database
 import           Database.Persist           (Entity, Key)
+
 import           Network.Wai.Handler.Warp   (run)
+
 import           Servant.API
 import           Servant.Client
 import           Servant.Server
-
-import           BasicSchema
-import           Cache
-import           Database
 
 type UsersAPI =
        "users" :> Capture "userid" Int64 :> Get '[JSON] User

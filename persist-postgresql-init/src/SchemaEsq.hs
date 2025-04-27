@@ -18,10 +18,9 @@ import           Data.Aeson
 import           Data.Aeson.Types
 import           Data.Text             (Text)
 import           Data.Time             (UTCTime)
-import           Data.Time.Clock.POSIX
-    ( posixSecondsToUTCTime
-    , utcTimeToPOSIXSeconds
-    )
+import           Data.Time.Clock.POSIX (posixSecondsToUTCTime,
+                                        utcTimeToPOSIXSeconds)
+
 import           Database.Persist      (Entity (..))
 import           Database.Persist.Sql  (fromSqlKey, toSqlKey)
 import qualified Database.Persist.TH   as PTH

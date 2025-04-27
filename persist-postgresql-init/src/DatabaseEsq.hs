@@ -5,43 +5,22 @@ module DatabaseEsq
 
 import           Control.Monad               (void)
 import           Control.Monad.IO.Class      (MonadIO)
-import           Control.Monad.Logger
-    ( LogLevel (..)
-    , LoggingT
-    , MonadLogger
-    , filterLogger
-    , runStdoutLoggingT
-    )
+import           Control.Monad.Logger        (LogLevel (..), LoggingT,
+                                              MonadLogger, filterLogger,
+                                              runStdoutLoggingT)
 import           Control.Monad.Reader        (runReaderT)
+
 import           Data.ByteString.Char8       (pack, unpack)
 import           Data.Int                    (Int64)
 import           Data.Maybe                  (listToMaybe)
-import           Database.Esqueleto
-    ( InnerJoin (..)
-    , desc
-    , from
-    , limit
-    , on
-    , orderBy
-    , select
-    , val
-    , where_
-    , (==.)
-    , (^.)
-    )
-import           Database.Persist
-    ( Entity
-    , delete
-    , entityVal
-    , get
-    , insert
-    )
-import           Database.Persist.Postgresql
-    ( ConnectionString
-    , SqlPersistT
-    , runMigration
-    , withPostgresqlConn
-    )
+
+import           Database.Esqueleto          (InnerJoin (..), desc, from, limit,
+                                              on, orderBy, select, val, where_,
+                                              (==.), (^.))
+import           Database.Persist            (Entity, delete, entityVal, get,
+                                              insert)
+import           Database.Persist.Postgresql (ConnectionString, SqlPersistT,
+                                              runMigration, withPostgresqlConn)
 import           Database.Persist.Sql        (fromSqlKey, toSqlKey)
 
 import           SchemaEsq

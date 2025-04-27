@@ -3,14 +3,16 @@
 module Database
     where
 
+import           BasicSchema
+
 import           Control.Monad.IO.Class      (MonadIO)
 import           Control.Monad.Logger
 import           Control.Monad.Reader        (runReaderT)
+
 import           Data.Int                    (Int64)
+
 import           Database.Persist
 import           Database.Persist.Postgresql
-
-import           BasicSchema
 
 type PGInfo = ConnectionString
 

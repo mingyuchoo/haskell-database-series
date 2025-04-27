@@ -1,20 +1,24 @@
 {-# LANGUAGE OverloadedStrings #-}
 
 module Infrastructure.Repository.UserRepository
-    ( UserRepository(..)
-    , initDB
+    ( UserRepository (..)
     , createUser
+    , deleteUser
     , getAllUsers
     , getUserById
+    , initDB
     , updateUser
-    , deleteUser
     ) where
 
-import           Domain.UserModel                (User(..))
-import           Application.UserService     (UserService(..))
-import           Data.Time                   (getCurrentTime)
+import           Application.UserService (UserService (..))
+
+import           Data.Time               (getCurrentTime)
+
 import           Database.SQLite.Simple
-import           Flow                        ((<|))
+
+import           Domain.UserModel        (User (..))
+
+import           Flow                    ((<|))
 
 -- SQLite implementation of UserService
 newtype UserRepository = UserRepository Connection
@@ -72,7 +76,7 @@ instance UserService UserRepository where
         maybeUser <- getUserById (UserRepository conn) uid
         case maybeUser of
             Just user -> return True
-            Nothing -> return False
+            Nothing   -> return False
 
     -- Delete user
     deleteUser (UserRepository conn) uid = do
